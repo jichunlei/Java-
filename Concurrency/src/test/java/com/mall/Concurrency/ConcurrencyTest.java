@@ -51,7 +51,7 @@ public class ConcurrencyTest {
      * @auther: xianzilei
      * @date: 2019/6/19 8:13
      **/
-    private static void add(){
+    private synchronized static void add(){
         count++;
     }
 
