@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 public class Person {
     String name;
-    public volatile Integer age;
+    public volatile int age;
     long id;
     Date birthDay;
 }
