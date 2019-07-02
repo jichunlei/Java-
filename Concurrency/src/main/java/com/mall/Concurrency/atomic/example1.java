@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.concurrent.atomic.AtomicStampedReference;
+import java.util.concurrent.atomic.*;
 
 /**
  * @Auther: xianzilei
@@ -177,4 +175,42 @@ public class example1 {
         }
     }
 
+    /**
+     * @Description: AtomicIntegerArray:用法与AtomicInteger类似
+     * @return: void
+     * @auther: xianzilei
+     * @date: 2019/6/28 7:52
+     **/
+    @Test
+    public void test0401(){
+        int[] args=new int[]{1,2};
+        //传递数据到AtomicIntegerArray中，数据会被复制一份到类中成员
+        AtomicIntegerArray ai=new AtomicIntegerArray(args);
+        //所以调用set等方法不会修改原数组内容，只会修改类中内部数据
+        ai.getAndSet(0,9);
+        ai.incrementAndGet(1);
+        log.info("args[0]:{}",args[0]);
+        log.info("args[1]:{}",args[1]);
+        log.info("ai[0];{}",ai.get(0));
+        log.info("ai[1];{}",ai.get(1));
+    }
+
+    /**
+     * @Description: AtomicReference:原子更新引用类型
+     * @return: void
+     * @auther: xianzilei
+     * @date: 2019/6/28 8:05
+     **/
+    @Test
+    public void test0501(){
+        Person p1=new Person();
+        p1.setName("zhangsan");
+        p1.setId(1);
+        Person p2=new Person();
+        p2.setName("lisi");
+        p2.setId(2);
+        AtomicReference<Person> atomicReference=new AtomicReference<>(p1);
+        atomicReference.compareAndSet(p1, p2);
+        log.info("atomicReference:{}",atomicReference.get().toString());
+    }
 }

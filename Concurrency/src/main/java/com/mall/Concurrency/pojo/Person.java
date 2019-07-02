@@ -1,7 +1,6 @@
 package com.mall.Concurrency.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -10,8 +9,7 @@ import java.util.Date;
  * @Date: 2019/6/25 18:36
  * @Description: 测试对象
  */
-@Setter
-@Getter
+@Data
 public class Person {
     String name;
     public volatile int age;
