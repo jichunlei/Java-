@@ -2,12 +2,8 @@ package com.mall.Concurrency.lock;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.*;
 
 /**
  * @Auther: xianzilei
@@ -215,5 +211,9 @@ public class LockDemo {
                 }
             }).start();
         }
+    }
+
+    @Test
+    public void test0403() {
     }
 }
