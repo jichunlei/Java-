@@ -40,6 +40,6 @@ public class SingletonExample4 {
      *  a、memory=allocate()：分配对象的内存空间
      *  c、instance=memory：设置instance指向刚分配的内存
      *  b、ctorInstance()：初始化对象
-     * 三、结果可想而知
+     * 三、结果可想而知：对象的初始化还未完成就返回
      **/
 }

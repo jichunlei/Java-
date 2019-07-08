@@ -5,11 +5,11 @@ import com.mall.Concurrency.annoations.ThreadSafe;
 /**
  * @Auther: xianzilei
  * @Date: 2019/7/6 08:57
- * @Description: 单例模式（饿汉式）：单例实例在类装载的时候就进行创建
+ * @Description: 单例模式（饿汉式）：单例实例在类装载的时候就进行创建（静态域初始化）
  */
 @ThreadSafe
 public class SingletonExample2 {
-    //单例对象
+    //单例对象（静态域初始化）
     private static SingletonExample2 singletonExample2 = new SingletonExample2();
 
     //私有构造函数
