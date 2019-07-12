@@ -3,6 +3,7 @@ package com.mall.Concurrency.unsafeclass;
 import com.mall.Concurrency.annoations.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -20,13 +21,15 @@ import java.util.concurrent.Semaphore;
 public class ArrayListExample1 {
 
     //请求总数
-    public static int clientTotal = 10000;
+    public static int clientTotal = 1000;
     //同时并发的线程数
-    public static int threadTotal = 100;
+    public static int threadTotal = 50;
 
-    private static List<Integer> list = new ArrayList<>();
+    private static List<Integer> list = new ArrayList<>(1);
+
 
     public static void main(String[] args) throws Exception {
+        log.info("final:{}", getAddress("elementData"));
         ExecutorService executorService = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
@@ -46,6 +49,7 @@ public class ArrayListExample1 {
         countDownLatch.await();
         executorService.shutdown();
         log.info("size:{}", list.size());
+        log.info("final:{}", getAddress("elementData"));
     }
 
     /**
@@ -56,5 +60,19 @@ public class ArrayListExample1 {
      **/
     private static void test(int count) {
         list.add(count);
+    }
+
+    /**
+     * @Description: 通过反射获取list中属性的地址
+     * @return: int
+     * @auther: xianzilei
+     * @date: 2019/7/12 8:18
+     **/
+    private static int getAddress(String fieldname) throws NoSuchFieldException, IllegalAccessException {
+        Class<? extends List> listClass = list.getClass();
+        Field field = listClass.getDeclaredField(fieldname);
+        field.setAccessible(true);
+        Object o = field.get(list);
+        return System.identityHashCode(o);
     }
 }
