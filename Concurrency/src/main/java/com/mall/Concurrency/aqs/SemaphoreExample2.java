@@ -2,45 +2,43 @@ package com.mall.Concurrency.aqs;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Semaphore;
 
 /**
  * @Auther: xianzilei
  * @Date: 2019/7/18 08:47
- * @Description: CountDownLatch的超时用法
+ * @Description: Semaphore介绍--每次获取多个许可
  */
 @Slf4j
-public class CountDownLatchExample2 {
+public class SemaphoreExample2 {
 
-    private final static int threadNum = 200;
+    private final static int threadNum = 30;
+    private final static int currentThreadNum = 3;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
+        final Semaphore semaphore = new Semaphore(currentThreadNum);
         for (int i = 0; i < threadNum; i++) {
             final int threadNum = i;
             executorService.execute(() -> {
                 try {
+                    //获取多个许可（当获取许可个数=currentThreadNum，类似单线程执行）
+                    semaphore.acquire(currentThreadNum);
                     test(threadNum);
+                    //释放多个许可
+                    semaphore.release(currentThreadNum);
                 } catch (Exception e) {
                     log.info("exception", e);
-                } finally {
-                    countDownLatch.countDown();
                 }
             });
         }
-        //保证前面线程执行完成后才执行下去
-        countDownLatch.await(10, TimeUnit.MILLISECONDS);
-        log.info("finish");
         executorService.shutdown();
     }
 
     public static void test(int threadNum) throws Exception {
-        Thread.sleep(100);
         log.info("count:{}", threadNum);
-//        Thread.sleep(100);
+        Thread.sleep(1000);
     }
 }
