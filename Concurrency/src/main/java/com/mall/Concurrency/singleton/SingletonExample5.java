@@ -9,7 +9,7 @@ import com.mall.Concurrency.annoations.ThreadSafe;
  */
 @ThreadSafe
 public class SingletonExample5 {
-    //单例对象
+    //单例对象，必须加volatile，否则会有指令重排问题
     private static volatile SingletonExample5 singletonExample5 = null;
 
     //私有构造函数
