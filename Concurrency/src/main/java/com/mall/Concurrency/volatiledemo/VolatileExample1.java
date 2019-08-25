@@ -16,8 +16,8 @@ public class VolatileExample1 {
 		 */
 		i++;
 	}
-
 	// 解决线程安全问题方式一:使用原子保证类
+	//底层原理为：Unsafe类中的（CAS算法+自旋锁）
 	AtomicInteger atomicInteger = new AtomicInteger();
 	
 	int j=0;
